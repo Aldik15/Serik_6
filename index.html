@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Component in HTML</title>
+
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    #root {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+      transform: scale(1.1);
+    }
+
+    #additionalText {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  class MyComponent extends React.Component {
+    constructor(props) {
+      super(props);
+
+      const { fullName, age } = this.props;
+      console.log(`ФИО: ${fullName}, Возраст: ${age}`);
+
+      this.state = {
+        isClicked: false,
+      };
+    }
+
+    handleClick = () => {
+      this.setState((prevState) => ({
+        isClicked: !prevState.isClicked,
+      }));
+    };
+
+    render() {
+      return (
+        <div id="root">
+          <p>{`ФИО: ${this.props.fullName}, Возраст: ${this.props.age}`}</p>
+          <button onClick={this.handleClick}>
+            {this.state.isClicked ? 'Кнопка нажата' : 'Нажми меня'}
+          </button>
+          <div id="additionalText">
+            {this.state.isClicked && (
+              <p>
+                <strong>Контрольные вопросы:</strong>
+                <br />
+                1. В чем отличие Props от State?
+                <br />
+                Props (сокращение от properties) представляют собой данные, которые передаются компоненту извне (родительского компонента). Они являются неизменяемыми и предназначены для передачи информации от родительского компонента к дочернему.
+                State представляет собой внутреннее состояние компонента. Это изменяемые данные, управляемые самим компонентом. Используется для отслеживания и реагирования на изменения в компоненте.
+                <br />
+                <br />
+                2. В чем разница между обработкой событий в React и элементов DOM с помощью обычного JavaScript?
+                <br />
+                В React обработка событий происходит с использованием синтетических событий, которые предоставляются библиотекой React. Это абстракция над нативными событиями браузера, что делает код более кросс-браузерным.
+                В обычном JavaScript для обработки событий используются нативные события DOM, такие как addEventListener. Однако, в отличие от React, это может потребовать больше кода и привести к более сложной обработке кросс-браузерных проблем.
+              </p>
+            )}
+          </div>
+        </div>
+      );
+    }
+  }
+
+  ReactDOM.render(<MyComponent fullName="Ваше ФИО" age={25} />, document.getElementById('root'));
+</script>
+
+</body>
+</html>
